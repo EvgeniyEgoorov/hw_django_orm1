@@ -1,7 +1,8 @@
 import csv
 
 from django.core.management.base import BaseCommand
-from work_with_database.phones.models import Phone
+from django.template.defaultfilters import slugify
+from phones.models import Phone
 
 
 class Command(BaseCommand):
@@ -15,10 +16,10 @@ class Command(BaseCommand):
         for phone in phones:
             phone_info = Phone(
                 name=phone['name'],
-                price=int(phone['price']),
                 image=phone['image'],
+                price=int(phone['price']),
                 release_date=phone['release_date'],
-                lte_exist=phone['lte_exist'],
-                slug=phone['name'].lower()
+                lte_exists=phone['lte_exists'],
+                slug=slugify(phone['name'])
             )
             phone_info.save()
